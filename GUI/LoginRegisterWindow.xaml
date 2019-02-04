@@ -1,0 +1,39 @@
+﻿<Window x:Class="GUI.LoginRegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        xmlns:ff="clr-namespace:GUI"
+        mc:Ignorable="d"
+        Title="{Binding logRegStatus}" Height="500" Width="400" FontSize="14" Background="#FF0695CB" Icon="team6Logo.jpg" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Border Background="Black" CornerRadius="20" Margin="20">
+        <StackPanel Margin="20">
+
+            <!-- HEADER LOGO -->
+            <Image Source="images/team6Logo.jpg" Height="69" HorizontalAlignment="Center" Margin="67,0,65.333,0" Width="81"/>
+            <TextBlock Text="{Binding logRegStatus}" FontFamily="agency fb" Foreground="White" HorizontalAlignment="Center" FontSize="25"  />
+            <Separator></Separator>
+
+            <!-- GID -->
+            <Label Content="Group ID:" FontFamily="agency fb" Foreground="White" HorizontalAlignment="Left"/>
+            <ComboBox ItemsSource="{Binding g_id_selection}" SelectedItem="{Binding g_id_selected}" SelectedIndex="0" Padding="2" FontWeight="ExtraLight" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="177"/>
+
+            <!-- NICKNAME -->
+            <Label Content="User Name:" FontFamily="agency fb" Foreground="White" HorizontalAlignment="Left" />
+            <TextBox Padding="2" Text="{Binding user_name,UpdateSourceTrigger=PropertyChanged}" GotFocus="user_name_textBoxHasChanged" FontWeight="ExtraLight" Margin="0,0,137.667,0" />
+            <!-- Password -->
+            <Label Content="Password:" FontFamily="agency fb" Foreground="White" HorizontalAlignment="Left" />
+            <PasswordBox
+                   Padding="2" MaxLength="16" FontWeight="ExtraLight" Margin="0,0,137.667,0" PasswordChanged="pswrd_hasChanged">
+            </PasswordBox>
+            <!-- loginRegisterButton -->
+            <Button Name="button_logReg" ToolTip="Send" FontFamily="agency fb" Click="button_logReg_Click" Background="#545d6a" Foreground="White" IsDefault="True" Content="{Binding logRegBtnStatus}" HorizontalAlignment="Center" Margin="116,10,131,10" Width="65"/>
+            <Separator></Separator>
+
+            <!-- BACK -->
+            <Button ToolTip="Back to main window" FontFamily="agency fb" Click= "button_Back_Click" Content="Back" Background="#545d6a" Foreground="White" HorizontalAlignment="Center" Margin="117,10,132.667,0" Width="65"/>
+        </StackPanel>
+    </Border>
+
+</Window>

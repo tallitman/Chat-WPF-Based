@@ -1,0 +1,171 @@
+﻿<Window x:Class="GUI.ChatRoomWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:w="clr-namespace:System.Windows.Workarounds" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI"
+        mc:Ignorable="d"
+        Title="ChatRoomWindow" Height="620" Width="920" Background="#FF0695CB" FontSize="12" Icon="team6Logo.jpg" 
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <local:ObrModels x:Key="ObrModels"/>
+    </Window.Resources>
+    
+
+    <Border Padding="10" Background="Black" CornerRadius="15" Width="860" Height="520">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="600*" />
+                <ColumnDefinition Width="300*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20*" />
+                <RowDefinition Height="365" />
+                <RowDefinition Height="20*" />
+                <RowDefinition Height="101*" />
+                <RowDefinition Height="20*" />
+            </Grid.RowDefinitions>
+
+            <!-- Logged in user -->
+            <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="10,-5,0,0">
+                <Label Content="Welcome to Sixth Team Chatroom" Foreground="White"></Label>
+            </StackPanel>
+
+            <!-- Server Time -->
+            <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="10,-5,0,0">
+                <Label Content="{Binding ServerTime}" Foreground="White"></Label>
+            </StackPanel>
+
+            <!-- Messages -->
+            <ListBox ItemsSource="{Binding Messages}" Loaded="listBoxLoad" w:ListBox.AutoScroll="True" SelectedIndex="{Binding MessagesSelectedIndex}" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsEnabled="True" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1" Height="365" Width="555"  Background="#F5F5F5">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <Button Height="11" Width="11" Click="edit_Click" Visibility="{Binding buttonVisibility}" Margin="0,1,1,0">
+                                <Image Source="{Binding iconPath}"/>
+                            </Button>
+                            <TextBlock Margin="3,0,0,0" Text="{Binding message}" TextWrapping="Wrap"/>
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
+
+            <!-- Right Panel -->
+            <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Margin="5,5.2,5,6.2" Background="#F5F5F5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50*" />
+                    <RowDefinition Height="50*" />
+                    <RowDefinition Height="50*" />
+                    <RowDefinition Height="50*" />
+                    <RowDefinition Height="50*" />
+                    <RowDefinition Height="50*" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Grid.RowSpan="6" Margin="5,5,5,5">
+
+                    <!-- Filter -->
+                    <Label Content="Filter By:" FontWeight="Bold" />
+                    <ComboBox Margin="5,5,5,5" ItemsSource="{Binding FilterByItems}" SelectedItem="{Binding FilterByCombobox}" ToolTip="Choose the filtering type">
+                    </ComboBox>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Grid.Row="0" Visibility="{Binding FilterGidView}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Group ID:" Grid.Column="0" FontWeight="Bold" ToolTip="Show all messages sent by a certain group"/>
+                            <ComboBox ItemsSource="{Binding FilterByGidList}" Grid.Column="1" Margin="5,5,4.7,5" FontSize="11" SelectedItem="{Binding FilterByGid}"/>
+                        </Grid>
+                        <Grid Grid.Column="0" Grid.Row="1" Visibility="{Binding FilterNicknameView}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Nickname:" Grid.Column="0" FontWeight="Bold" ToolTip="Show all messages sent by a certain user"/>
+                            <ComboBox ItemsSource="{Binding FilterByGidNickname}" Grid.Column="1" Margin="5,5,4.7,5" FontSize="11" SelectedItem="{Binding FilterByNickname}"/>
+                        </Grid>
+                    </Grid>
+
+                    <!-- Sort -->
+                    <Label FontWeight="Bold" Margin="0,5,0,0">Sort by:</Label>
+                    <ComboBox Grid.Column="0" ItemsSource="{Binding SortByItems}" Margin="5,5,5,5" SelectedItem="{Binding SortByCombobox}" ToolTip="Sort by choosing one of the following sort options" >
+                    </ComboBox>
+
+                    <!-- Ascending & Descending -->
+                    <StackPanel>
+                        <Label FontWeight="Bold">Choose the sorting order:</Label>
+                        <RadioButton IsChecked="{Binding Ascending}" Margin="5,5,5,5" ToolTip="For example: group ID 1 is first" >Ascending</RadioButton>
+                        <RadioButton IsChecked="{Binding Descending}" Margin="5,5,5,5" ToolTip="For example: group ID 1 is last" >Descending</RadioButton>
+                    </StackPanel>
+
+                    <!-- Filter & Sort Button-->
+                    <Button HorizontalAlignment="Center" Margin="5,25,5,40" Width="100" Background="#545d6a" Foreground="White" ToolTip="Sort and filter" Height="19" Click="FILTER_SORT_Click" >Apply changes</Button>
+
+                    <!-- Last update -->
+                    <Border BorderThickness="0.5" BorderBrush="Black" Margin="5,5,5,5" Height="98">
+                        <Grid Height="100" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="6*" />
+                                <RowDefinition Height="19*" />
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" FontWeight="Bold" Content="Last update:"  HorizontalContentAlignment="Center" Height="25"  ToolTip="The last alert you got from the server is shown below."/>
+                            <TextBlock Text="{Binding Indicator}"  Grid.Row="1" TextWrapping="WrapWithOverflow" Width="229" Foreground="{Binding IndicatorColor}" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Grid>
+
+            <TextBlock IsEnabled="False" Margin="10,0,0,0" Grid.Column="0" Grid.Row="2">
+                <TextBlock.Inlines>
+                    <Run Foreground="DimGray" Text="Characters left:" />
+                    <Run Text="{Binding CharactersLeft}" Foreground="{Binding CharactersLeftColor}" />
+                </TextBlock.Inlines>
+            </TextBlock>
+
+            <!-- Send message & Logout -->
+            <Grid Grid.Column="0" Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="540*" />
+                    <ColumnDefinition Width="60*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Button Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Margin="5,5,5,5" Width="55" Background="#545d6a" Foreground="White" ToolTip="Send your nessage" Click="button_Send_Click">Send</Button>
+                <Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Margin="5,5,5,5" Width="55" Background="#545d6a" Foreground="White" ToolTip="Log out and exit to main menu" Click="Button_Logout" >Logout</Button>
+                <Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="0,5,0,5" Background="#F5F5F5" Width="495" />
+                <Label Content="Send New Message" Foreground="DimGray" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Visibility="{Binding sendNewMessage}" Margin="0,5,0,5" Width="495" />
+
+                <TextBox Text="{Binding MessageContent}" local:FocusExtension.IsFocused="{Binding IsTextBoxFocused}" TextWrapping="Wrap" TextChanged="textBox_NewMessage_TextChanged"  Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Left" Padding="5" Width="496"  Margin="4,5,0,5" BorderBrush="#545d6a" ToolTip="Enter you message here and then press send or enter" LostFocus="textBox_NewMessage_LostFocus" GotFocus="textBox_NewMessage_gotFocus" Background="Transparent" KeyDown="send_keyDown" MinLines="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
+
+            </Grid>
+
+            <!-- Logged in user -->
+            <StackPanel Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Margin="10,-5,0,0">
+                <!--<Label Content="{Binding LoggedInContent}" Foreground="White"></Label>-->
+                <TextBlock IsEnabled="False" Foreground="White">
+                    <TextBlock.Inlines>
+                        <Run Text="Logged in as:" />
+                        <Run FontWeight="Bold" Text="{Binding LoggedInContent}" />
+                    </TextBlock.Inlines>
+                </TextBlock>
+
+            </StackPanel>
+
+            <!-- Rights -->
+            <StackPanel Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Margin="10,-5,0,0">
+                <Label Content="© All rights reserved to Tal, Bar and Alex ©" Foreground="White"></Label>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

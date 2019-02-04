@@ -1,0 +1,30 @@
+﻿<Window x:Class="GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI"
+        mc:Ignorable="d"
+        Title="Welcome" Height="500" Width="400" FontSize="14" Background="#FF0695CB" Icon="team6Logo.jpg" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Border Background="Black" CornerRadius="20" Margin="20">
+        <StackPanel Margin="20">
+
+            <!-- HEADER WELCOME -->
+            <TextBlock Name="welcomeLabel" Text="Welcome To Chatroom" FontWeight="Bold" FontFamily="agency fb" FontSize="25" Foreground="White" HorizontalAlignment="Center" Margin="0 10 0 0"/>
+            <Separator></Separator>
+            
+            <!-- HEADER LOGO -->
+            <Image Source="images/team6Logo.jpg" Height="117" Margin="0,30,0,0" />
+            <TextBlock Name="selectLabel" Text="Select your prefferd option:" FontSize="20" Foreground="White" FontFamily="agency fb" HorizontalAlignment="Center" Margin="0 30 0 0" />
+            <StackPanel/>
+            
+            <!-- BUTTONS -->
+            <Button Name="button_login" ToolTip="Enter Login window" FontFamily="agency fb" Foreground="White" Background="#545d6a" HorizontalAlignment="Center"  Click="button_login_Click" Content="Login" Width="54" Margin=" 0 5 0 0"/>
+            <Button Name="button_register" ToolTip="Enter Registration window" Content="Register" Background="#545d6a" Foreground="White" Click="button_register_Click" HorizontalAlignment="Center" Margin="0,5,0,0" Width="54"/>
+            <Button Name="button_exit" ToolTip="Quit" Click="button_exit_Click" Content="Exit" Background="#545d6a" Foreground="White" HorizontalAlignment="Center" Margin="0,5,0,0" Width="54"/>
+
+            <!-- FOOTER RIGHTS -->
+            <TextBlock Name="rights" Text="© All Rights Reserved Team6 Ltd." FontFamily="david" FontSize="10" Foreground="White" HorizontalAlignment="Center" Margin="0 20 0 0"/>
+        </StackPanel>
+    </Border>
+</Window>
